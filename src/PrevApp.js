@@ -1,3 +1,5 @@
+// Saved to train .then() approach in App.js
+
 import React, { useCallback, useEffect, useState } from "react";
 
 import MoviesList from "./components/Movies/MoviesList";
@@ -8,29 +10,29 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState(null);
 
-  const fetchMoviesHandler = useCallback(async () => {
+  const fetchMoviesHandler = useCallback(() => {
     setIsLoading(true);
     setErr(null);
 
-    try {
-      const response = await fetch("https://swapi.dev/api/films/");
-      if (!response.ok) {
-        throw new Error("Something went wrong");
-      }
-      const data = await response.json();
+    fetch("https://swapi.dev/api/films/")
+      .then((response) => {
+        if (!response.ok) throw new Error("Somthing went wrong");
+        return response.json();
+      })
+      .then((data) => {
+        setMovies(
+          data.results.map((movieData) => {
+            return {
+              id: movieData.episode_id,
+              title: movieData.title,
+              openingText: movieData.opening_crawl,
+              releaseDate: movieData.release_date,
+            };
+          })
+        );
+      })
+      .catch((error) => setErr(error.message));
 
-      const transformedMovies = data.results.map((movieData) => {
-        return {
-          id: movieData.episode_id,
-          title: movieData.title,
-          openingText: movieData.opening_crawl,
-          releaseDate: movieData.release_date,
-        };
-      });
-      setMovies(transformedMovies);
-    } catch (error) {
-      setErr(error.message);
-    }
     setIsLoading(false);
   }, []);
 
