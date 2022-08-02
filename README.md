@@ -1,4 +1,4 @@
-- A side project created primarily to work with server and API.
+- A side project created primarily to work with server Fetch API and REST API.
 - Written on React.js.
 
 
