@@ -3,7 +3,7 @@ import React from "react";
 import Movie from "./Movie/Movie";
 import classes from "./MoviesList.module.css";
 
-const MovieList = ({ movies }) => {
+const MoviesList = ({ movies }) => {
   return (
     <ul className={classes["movies-list"]}>
       {movies.map((movie) => (
@@ -18,4 +18,4 @@ const MovieList = ({ movies }) => {
   );
 };
 
-export default MovieList;
+export default MoviesList;
